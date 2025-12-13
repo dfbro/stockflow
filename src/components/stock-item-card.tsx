@@ -1,0 +1,68 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import type { StockItem } from '@/lib/types';
+import { Badge } from './ui/badge';
+
+interface StockItemCardProps {
+  stock: StockItem;
+  onRemove: (id: string) => void;
+}
+
+export function StockItemCard({ stock, onRemove }: StockItemCardProps) {
+  return (
+    <motion.li
+      layout
+      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
+      className="list-none"
+    >
+      <Card className="overflow-hidden h-full flex flex-col">
+        <div className="relative h-48 w-full">
+          <Image
+            src={stock.imageUrl}
+            alt={stock.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover"
+            data-ai-hint="product item"
+          />
+        </div>
+        <CardHeader>
+          <CardTitle className="flex justify-between items-start">
+            {stock.name}
+            <Badge variant="secondary" className="whitespace-nowrap">
+              Qty: {stock.amount}
+            </Badge>
+          </CardTitle>
+          <CardDescription className="pt-2">{stock.description}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex-grow"></CardContent>
+        <CardFooter>
+          <Button
+            variant="destructive"
+            size="sm"
+            className="w-full"
+            onClick={() => onRemove(stock.id)}
+            aria-label={`Remove ${stock.name}`}
+          >
+            <Trash2 />
+            Remove
+          </Button>
+        </CardFooter>
+      </Card>
+    </motion.li>
+  );
+}
