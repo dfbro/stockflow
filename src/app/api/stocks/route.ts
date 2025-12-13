@@ -10,10 +10,16 @@ const dataFilePath = path.join(process.cwd(), 'stocks.json');
 async function readData(): Promise<StockItem[]> {
   try {
     const fileData = await fs.readFile(dataFilePath, 'utf-8');
+    // If the file is empty or just whitespace, return an empty array
+    if (!fileData.trim()) {
+      return [];
+    }
     return JSON.parse(fileData);
   } catch (error) {
     // If the file does not exist, return an empty array
     if (error instanceof Error && (error as NodeJS.ErrnoException).code === 'ENOENT') {
+      // Optional: create the file if it doesn't exist
+      await writeData([]);
       return [];
     }
     // For other errors, re-throw

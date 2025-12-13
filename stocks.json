@@ -1,16 +1,1 @@
-[
-  {
-    "id": "77db04b2-8fa5-485e-9dc4-adadfde6acb9",
-    "name": "Random 2",
-    "amount": 90,
-    "description": "Aku sigma telkom",
-    "imageUrl": "https://picsum.photos/200/300"
-  },
-  {
-    "id": "c45b500d-41a4-49a8-bcdf-c47b77258814",
-    "name": "Random 1",
-    "amount": 2500,
-    "description": "Aku telkom sigma kita",
-    "imageUrl": "https://picsum.photos/200/300"
-  }
-]
+[]
