@@ -9,22 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import type { StockItem as StockItemType, StockItemData } from '@/lib/types';
 import { submitStockData } from './actions';
 
-const initialStocks: StockItemType[] = [
-  {
-    id: 'd8c7c3c8-1b2c-4f5a-9e2a-7b3f1b3e7b1a',
-    name: 'Heavy-Duty Widgets',
-    amount: 150,
-    description: 'Industrial grade widgets for heavy machinery. Pack of 50.',
-    imageUrl: 'https://picsum.photos/seed/widgets/400/300',
-  },
-  {
-    id: 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
-    name: 'Precision Gears',
-    amount: 320,
-    description: 'High-precision gears for electronic devices. Stainless steel.',
-    imageUrl: 'https://picsum.photos/seed/gears/400/300',
-  },
-];
+const initialStocks: StockItemType[] = [];
 
 const Page: FC = () => {
   const [stocks, setStocks] = useState<StockItemType[]>(initialStocks);
