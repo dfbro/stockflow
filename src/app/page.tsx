@@ -98,7 +98,7 @@ const Page: FC = () => {
             </div>
             <Button
               onClick={handleApiSubmit}
-              disabled={stocks.length === 0 || isPending}
+              disabled={stocks.length === 0 || isPending || editingStock !== null}
             >
               {isPending ? (
                 <LoaderCircle className="animate-spin" />
