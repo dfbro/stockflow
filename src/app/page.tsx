@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition, type FC } from 'react';
+import { useState, useTransition, useEffect, type FC } from 'react';
 import { Package, Send, LoaderCircle } from 'lucide-react';
 import { StockForm } from '@/components/stock-form';
 import { StockList } from '@/components/stock-list';
@@ -8,23 +8,60 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import type { StockItem as StockItemType, StockItemData } from '@/lib/types';
 import { submitStockData } from './actions';
-
-const initialStocks: StockItemType[] = [];
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Page: FC = () => {
-  const [stocks, setStocks] = useState<StockItemType[]>(initialStocks);
+  const [stocks, setStocks] = useState<StockItemType[]>([]);
+  const [editingStock, setEditingStock] = useState<StockItemType | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchStocks = async () => {
+      try {
+        const response = await fetch('/api/stocks');
+        if (!response.ok) {
+          throw new Error('Failed to fetch stocks');
+        }
+        const data = await response.json();
+        setStocks(data);
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'Could not load stock data.',
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchStocks();
+  }, [toast]);
+
 
   const handleAddStock = (newStockData: StockItemData) => {
     const newStock: StockItemType = {
       id: crypto.randomUUID(),
       ...newStockData,
     };
-    setStocks((prevStocks) => [newStock, ...prevStocks]);
+    const newStocks = [newStock, ...stocks];
+    setStocks(newStocks);
     toast({
       title: 'Stock Added',
       description: `${newStock.name} has been added to your inventory.`,
+    });
+  };
+
+  const handleUpdateStock = (updatedStock: StockItemType) => {
+    const newStocks = stocks.map((stock) =>
+      stock.id === updatedStock.id ? updatedStock : stock
+    );
+    setStocks(newStocks);
+    setEditingStock(null);
+    toast({
+      title: 'Stock Updated',
+      description: `${updatedStock.name} has been updated.`,
     });
   };
 
@@ -69,7 +106,7 @@ const Page: FC = () => {
                 <Send />
               )}
               <span>
-                {isPending ? 'Submitting...' : 'Submit to API'}
+                {isPending ? 'Saving...' : 'Save Inventory'}
               </span>
             </Button>
           </div>
@@ -78,10 +115,28 @@ const Page: FC = () => {
       <main className="flex-1 container mx-auto p-4 sm:p-6 lg:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-1 lg:sticky lg:top-24">
-            <StockForm onAddStock={handleAddStock} />
+             <StockForm 
+                onSave={editingStock ? handleUpdateStock : handleAddStock} 
+                editingStock={editingStock}
+                onClearEditing={() => setEditingStock(null)}
+              />
           </div>
           <div className="lg:col-span-2">
-            <StockList stocks={stocks} onRemoveStock={handleRemoveStock} />
+            {isLoading ? (
+              <div className="space-y-4">
+                <Skeleton className="h-8 w-1/2" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Skeleton className="h-96 rounded-lg" />
+                  <Skeleton className="h-96 rounded-lg" />
+                </div>
+              </div>
+            ) : (
+              <StockList
+                stocks={stocks}
+                onRemoveStock={handleRemoveStock}
+                onEditStock={(stock) => setEditingStock(stock)}
+              />
+            )}
           </div>
         </div>
       </main>

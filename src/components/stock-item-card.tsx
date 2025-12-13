@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Edit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -18,9 +18,10 @@ import { Badge } from './ui/badge';
 interface StockItemCardProps {
   stock: StockItem;
   onRemove: (id: string) => void;
+  onEdit: (stock: StockItem) => void;
 }
 
-export function StockItemCard({ stock, onRemove }: StockItemCardProps) {
+export function StockItemCard({ stock, onRemove, onEdit }: StockItemCardProps) {
   return (
     <motion.li
       layout
@@ -32,7 +33,7 @@ export function StockItemCard({ stock, onRemove }: StockItemCardProps) {
       <Card className="overflow-hidden h-full flex flex-col">
         <div className="relative h-48 w-full">
           <Image
-            src={stock.imageUrl}
+            src={stock.imageUrl || 'https://picsum.photos/seed/placeholder/600/400'}
             alt={stock.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -50,7 +51,17 @@ export function StockItemCard({ stock, onRemove }: StockItemCardProps) {
           <CardDescription className="pt-2">{stock.description}</CardDescription>
         </CardHeader>
         <CardContent className="flex-grow"></CardContent>
-        <CardFooter>
+        <CardFooter className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full"
+            onClick={() => onEdit(stock)}
+            aria-label={`Edit ${stock.name}`}
+          >
+            <Edit />
+            Edit
+          </Button>
           <Button
             variant="destructive"
             size="sm"

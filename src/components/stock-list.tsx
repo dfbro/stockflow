@@ -8,9 +8,10 @@ import { StockItemCard } from './stock-item-card';
 interface StockListProps {
   stocks: StockItem[];
   onRemoveStock: (id: string) => void;
+  onEditStock: (stock: StockItem) => void;
 }
 
-export function StockList({ stocks, onRemoveStock }: StockListProps) {
+export function StockList({ stocks, onRemoveStock, onEditStock }: StockListProps) {
   if (stocks.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-muted-foreground/30 bg-muted/50 h-96">
@@ -35,6 +36,7 @@ export function StockList({ stocks, onRemoveStock }: StockListProps) {
               key={stock.id}
               stock={stock}
               onRemove={onRemoveStock}
+              onEdit={onEditStock}
             />
           ))}
         </AnimatePresence>

@@ -1,8 +1,9 @@
 'use client';
 
+import { type FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Save, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -15,15 +16,17 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { stockSchema } from '@/lib/schema';
-import type { StockItemData } from '@/lib/types';
+import type { StockItem, StockItemData } from '@/lib/types';
 
 interface StockFormProps {
-  onAddStock: (data: StockItemData) => void;
+  onSave: (data: StockItem) => void;
+  editingStock: StockItem | null;
+  onClearEditing: () => void;
 }
 
-export function StockForm({ onAddStock }: StockFormProps) {
+export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEditing }) => {
   const form = useForm<StockItemData>({
     resolver: zodResolver(stockSchema),
     defaultValues: {
@@ -34,15 +37,35 @@ export function StockForm({ onAddStock }: StockFormProps) {
     },
   });
 
+  useEffect(() => {
+    if (editingStock) {
+      form.reset(editingStock);
+    } else {
+      form.reset({
+        name: '',
+        amount: 0,
+        description: '',
+        imageUrl: '',
+      });
+    }
+  }, [editingStock, form]);
+
   function onSubmit(data: StockItemData) {
-    onAddStock(data);
+    const stockToSave: StockItem = {
+      id: editingStock ? editingStock.id : crypto.randomUUID(),
+      ...data,
+    };
+    onSave(stockToSave);
     form.reset();
   }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Add New Stock</CardTitle>
+        <CardTitle>{editingStock ? 'Edit Stock' : 'Add New Stock'}</CardTitle>
+        <CardDescription>
+          {editingStock ? 'Update the details of the stock item.' : 'Fill in the form to add a new item to your inventory.'}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -96,7 +119,7 @@ export function StockForm({ onAddStock }: StockFormProps) {
                 <FormItem>
                   <FormLabel>Image URL</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://example.com/image.png" {...field} />
+                    <Input placeholder="https://picsum.photos/seed/1/600/400" {...field} />
                   </FormControl>
                   <FormDescription>
                     Provide a link to an image of the item.
@@ -105,10 +128,18 @@ export function StockForm({ onAddStock }: StockFormProps) {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-              <PlusCircle />
-              Add to Inventory
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+                {editingStock ? <Save /> : <PlusCircle />}
+                {editingStock ? 'Save Changes' : 'Add to Inventory'}
+              </Button>
+              {editingStock && (
+                <Button variant="outline" className="w-full" onClick={onClearEditing}>
+                  <XCircle />
+                  Cancel Edit
+                </Button>
+              )}
+            </div>
           </form>
         </Form>
       </CardContent>
