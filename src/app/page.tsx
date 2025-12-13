@@ -15,9 +15,11 @@ const Page: FC = () => {
   const [editingStock, setEditingStock] = useState<StockItemType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isPending, startTransition] = useTransition();
+  const [isClient, setIsClient] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
+    setIsClient(true);
     const fetchStocks = async () => {
       try {
         const response = await fetch('/api/stocks');
@@ -87,6 +89,10 @@ const Page: FC = () => {
     });
   };
 
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-card border-b sticky top-0 z-10">
@@ -142,7 +148,7 @@ const Page: FC = () => {
       </main>
       <footer className="bg-card border-t">
         <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} StockFlow. All rights reserved.
+          &copy; 2024 StockFlow. All rights reserved.
         </div>
       </footer>
     </div>
