@@ -81,4 +81,8 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  next-dev-tool {
+    display: none !important;
+  }
 }
