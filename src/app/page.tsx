@@ -187,9 +187,6 @@ const Page: FC = () => {
                   {isPending ? 'Saving...' : 'Update Market'}
                 </span>
               </Button>
-              {hasUnsavedChanges && !isPending && (
-                  <p className="text-xs text-muted-foreground mt-1">Unsaved changes</p>
-              )}
             </div>
           </div>
         </div>
