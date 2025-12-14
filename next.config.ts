@@ -1,28 +1,17 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  /* other options ... */
+  allowedDevOrigins: ['mikir.lylo.eu.org', '*.mikir.lylo.eu.org'],
+  typescript: { ignoreBuildErrors: true },
+  eslint: { ignoreDuringBuilds: true },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-      {
-        protocol: 'http',
-        hostname: '**',
-      }
-    ],
+    remotePatterns: [{ protocol: 'https', hostname: '**' }, { protocol: 'http', hostname: '**' }],
   },
   experimental: {
     serverActions: {
-      allowedOrigins: ['*'],
+      // see section 2
+      allowedOrigins: ['mikir.lylo.eu.org'],
     },
   },
 };

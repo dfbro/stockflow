@@ -1,9 +1,12 @@
-[
-  {
-    "id": "40e2ee4e-d0b5-4cbe-96f6-89c4c9178de6",
-    "name": "ngawur",
-    "amount": 10,
-    "description": "aku suka telkom",
-    "imageUrl": "https://picsum.photos/200/300"
+{
+  "appPackageName": "tkstudio.autoresponderforwa",
+  "messengerPackageName": "com.whatsapp",
+  "query": {
+    "sender": "͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏Daffa Moklet",
+    "message": "stok",
+    "isGroup": false,
+    "groupParticipant": "",
+    "ruleId": 1,
+    "isTestMessage": false
   }
-]
+}

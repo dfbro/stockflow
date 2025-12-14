@@ -27,7 +27,8 @@ const Page: FC = () => {
           throw new Error('Failed to fetch stocks');
         }
         const data = await response.json();
-        setStocks(data);
+        // The API returns an object { stocks: [] }, so we need to access the array
+        setStocks(Array.isArray(data) ? data : []);
       } catch (error) {
         toast({
           variant: 'destructive',
