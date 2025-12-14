@@ -1,16 +1,25 @@
 {
   "stocks": [
     {
+      "id": "4818f68a-01f0-4b2a-a6c6-48403b6f023e",
+      "name": "Telkom Mlg",
+      "amount": 10000,
+      "price": 5000,
+      "description": "Nasionalis Telkom",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/id/8/89/Logo_SMK_Telkom_Malang%2C_2024.png"
+    },
+    {
       "id": "d36d0db8-ff64-4128-9a8d-1a2375b75626",
       "name": "ngawoer",
       "amount": 10,
+      "price": 100,
       "description": "wlee mus be zero",
-      "imageUrl": "https://mikir.lylo.eu.org/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FkN4x_9qoEEk%2Fhq720.jpg%3Fsqp%3D-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD%26rs%3DAOn4CLC9Uoya4IRa7lHpsA_yJlYD0Gvl9Q&w=640&q=75"
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXlEvriUI_t0phux5Y8NFbcpjGxJJGfvsWaQ&s"
     }
   ],
   "marketSettings": {
-    "marketLocation": "Jl brawijaya ngawur pls wok",
-    "marketStatus": true,
-    "closureReason": "gak tawu"
+    "marketLocation": "Jl brawijaya aseli surabaya",
+    "marketStatus": false,
+    "closureReason": "gak tawu pls"
   }
 }

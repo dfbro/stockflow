@@ -2,6 +2,9 @@ import { z } from 'zod';
 
 export const stockItemSchema = z.object({
   name: z.string().min(2, { message: 'Nama harus minimal 2 karakter.' }),
+  price: z.coerce
+    .number({ invalid_type_error: 'Harga harus berupa angka.'})
+    .positive({ message: 'Harga harus berupa angka positif.' }),
   amount: z.coerce
     .number({ invalid_type_error: 'Jumlah harus berupa angka.' })
     .int()

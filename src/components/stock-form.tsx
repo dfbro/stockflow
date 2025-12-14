@@ -31,6 +31,7 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
     resolver: zodResolver(stockItemSchema),
     defaultValues: {
       name: '',
+      price: 0,
       amount: 0,
       description: '',
       imageUrl: '',
@@ -43,6 +44,7 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
     } else {
       form.reset({
         name: '',
+        price: 0,
         amount: 0,
         description: '',
         imageUrl: '',
@@ -83,19 +85,34 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="amount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Jumlah</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="cth., 100" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+             <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Harga</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="cth., 5000" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Jumlah</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="cth., 100" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="description"

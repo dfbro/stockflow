@@ -22,6 +22,12 @@ interface StockItemCardProps {
 }
 
 export function StockItemCard({ stock, onRemove, onEdit }: StockItemCardProps) {
+  const formattedPrice = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  }).format(stock.price);
+
   return (
     <motion.li
       layout
@@ -42,11 +48,16 @@ export function StockItemCard({ stock, onRemove, onEdit }: StockItemCardProps) {
           />
         </div>
         <CardHeader>
-          <CardTitle className="flex justify-between items-start">
-            {stock.name}
-            <Badge variant="secondary" className="whitespace-nowrap">
-              Jml: {stock.amount}
-            </Badge>
+          <CardTitle className="flex justify-between items-start gap-2">
+            <span className="flex-grow">{stock.name}</span>
+            <div className="flex flex-col items-end gap-2 flex-shrink-0">
+               <Badge variant="secondary" className="whitespace-nowrap">
+                {formattedPrice}
+              </Badge>
+              <Badge variant="outline" className="whitespace-nowrap">
+                Jml: {stock.amount}
+              </Badge>
+            </div>
           </CardTitle>
           <CardDescription className="pt-2">{stock.description}</CardDescription>
         </CardHeader>
