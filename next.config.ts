@@ -2,15 +2,6 @@ import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
-  experimental: {
-    // This allows requests from your proxy domain during development.
-    // In a real production environment, you would likely remove this
-    // or replace it with your actual domain.
-    allowedDevOrigins: ["mikir.lylo.eu.org"],
-    serverActions: {
-      allowedForwardedHosts: ['mikir.lylo.eu.org', '127.0.0.1'],
-    },
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -28,6 +19,11 @@ const nextConfig: NextConfig = {
         hostname: '**',
       }
     ],
+  },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['*'],
+    },
   },
 };
 
