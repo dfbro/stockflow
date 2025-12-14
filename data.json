@@ -1,6 +1,14 @@
 {
   "stocks": [
     {
+      "id": "5397c1a1-271f-46eb-82b6-2dbd7f604daa",
+      "name": "aku suka JagoanHosting",
+      "price": 10000000,
+      "amount": 10000000,
+      "description": "JagoanHosting Tercinta",
+      "imageUrl": "https://www.jagoanhosting.com/blog/wp-content/uploads/2020/05/Logo-Jagoan-Hosting-1.png"
+    },
+    {
       "id": "4818f68a-01f0-4b2a-a6c6-48403b6f023e",
       "name": "Telkom Mlg",
       "amount": 10000,
@@ -20,6 +28,6 @@
   "marketSettings": {
     "marketLocation": "Jl brawijaya aseli surabaya",
     "marketStatus": false,
-    "closureReason": "gak tawu pls"
+    "closureReason": "Developer ngos ngosan walaupun kerjaan AI"
   }
 }
