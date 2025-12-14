@@ -27,7 +27,6 @@ const Page: FC = () => {
           throw new Error('Failed to fetch stocks');
         }
         const data = await response.json();
-        // The API returns an object { stocks: [] }, so we need to access the array
         setStocks(Array.isArray(data) ? data : []);
       } catch (error) {
         toast({
@@ -148,7 +147,7 @@ const Page: FC = () => {
                 <Send />
               )}
               <span>
-                {isPending ? 'Saving...' : 'Save Inventory'}
+                {isPending ? 'Saving...' : 'Update Market'}
               </span>
             </Button>
           </div>
@@ -184,7 +183,7 @@ const Page: FC = () => {
       </main>
       <footer className="bg-card border-t">
         <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-foreground">
-          {isClient && <span>&copy; {new Date().getFullYear()} StockFlow. All rights reserved.</span>}
+          {isClient && <span suppressHydrationWarning>&copy; {new Date().getFullYear()} StockFlow. All rights reserved.</span>}
         </div>
       </footer>
     </div>
