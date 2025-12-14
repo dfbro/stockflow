@@ -39,7 +39,14 @@ async function writeData(data: StockItem[]): Promise<void> {
 export async function GET() {
   try {
     const stocks = await readData();
-    return NextResponse.json(stocks);
+    // Manually stringify with indentation for pretty printing
+    const prettyJson = JSON.stringify(stocks, null, 2);
+    return new NextResponse(prettyJson, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
   } catch (error) {
     console.error('Failed to read stock data:', error);
     return NextResponse.json(
