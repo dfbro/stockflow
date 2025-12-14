@@ -31,7 +31,7 @@ const Page: FC = () => {
       try {
         const response = await fetch('/api/stocks');
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error('Gagal mengambil data');
         }
         const data = await response.json();
         
@@ -47,7 +47,7 @@ const Page: FC = () => {
         toast({
           variant: 'destructive',
           title: 'Error',
-          description: 'Could not load initial data.',
+          description: 'Tidak dapat memuat data awal.',
         });
       } finally {
         setIsLoading(false);
@@ -71,8 +71,8 @@ const Page: FC = () => {
     const newStocks = [newStock, ...stocks];
     setStocks(newStocks);
     toast({
-      title: 'Stock Added',
-      description: `${newStock.name} has been added to your inventory.`,
+      title: 'Stok Ditambahkan',
+      description: `${newStock.name} telah ditambahkan ke inventaris Anda.`,
     });
   };
 
@@ -83,8 +83,8 @@ const Page: FC = () => {
     setStocks(newStocks);
     setEditingStock(null);
     toast({
-      title: 'Stock Updated',
-      description: `${updatedStock.name} has been updated.`,
+      title: 'Stok Diperbarui',
+      description: `${updatedStock.name} telah diperbarui.`,
     });
   };
 
@@ -101,7 +101,7 @@ const Page: FC = () => {
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Market settings are not available.',
+        description: 'Pengaturan pasar tidak tersedia.',
       });
       return;
     }
@@ -111,7 +111,7 @@ const Page: FC = () => {
         setOriginalStocks(stocks);
         setOriginalMarketSettings(marketSettings);
         toast({
-          title: 'Success!',
+          title: 'Sukses!',
           description: result.message,
         });
       } else {
@@ -157,7 +157,7 @@ const Page: FC = () => {
       </main>
       <footer className="bg-card border-t">
         <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} StockFlow. All rights reserved.
+          &copy; {new Date().getFullYear()} StockFlow. Semua hak dilindungi.
         </div>
       </footer>
     </div>
@@ -184,7 +184,7 @@ const Page: FC = () => {
                   <Send />
                 )}
                 <span>
-                  {isPending ? 'Saving...' : 'Update Market'}
+                  {isPending ? 'Menyimpan...' : 'Perbarui Pasar'}
                 </span>
               </Button>
             </div>
@@ -229,7 +229,7 @@ const Page: FC = () => {
       </main>
       <footer className="bg-card border-t">
         <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-foreground">
-          {isClient && <span suppressHydrationWarning>&copy; {new Date().getFullYear()} StockFlow. All rights reserved.</span>}
+          {isClient && <span suppressHydrationWarning>&copy; {new Date().getFullYear()} StockFlow. Semua hak dilindungi.</span>}
         </div>
       </footer>
     </div>

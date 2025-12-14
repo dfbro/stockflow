@@ -45,7 +45,7 @@ export function StockItemCard({ stock, onRemove, onEdit }: StockItemCardProps) {
           <CardTitle className="flex justify-between items-start">
             {stock.name}
             <Badge variant="secondary" className="whitespace-nowrap">
-              Qty: {stock.amount}
+              Jml: {stock.amount}
             </Badge>
           </CardTitle>
           <CardDescription className="pt-2">{stock.description}</CardDescription>
@@ -57,20 +57,20 @@ export function StockItemCard({ stock, onRemove, onEdit }: StockItemCardProps) {
             size="sm"
             className="w-full"
             onClick={() => onEdit(stock)}
-            aria-label={`Edit ${stock.name}`}
+            aria-label={`Ubah ${stock.name}`}
           >
             <Edit />
-            Edit
+            Ubah
           </Button>
           <Button
             variant="destructive"
             size="sm"
             className="w-full"
             onClick={() => onRemove(stock.id)}
-            aria-label={`Remove ${stock.name}`}
+            aria-label={`Hapus ${stock.name}`}
           >
             <Trash2 />
-            Remove
+            Hapus
           </Button>
         </CardFooter>
       </Card>

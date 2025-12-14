@@ -50,9 +50,9 @@ export const MarketSettings: FC<MarketSettingsProps> = ({ settings, onSave }) =>
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Market Settings</CardTitle>
+        <CardTitle>Pengaturan Pasar</CardTitle>
         <CardDescription>
-          Manage the overall market location and status.
+          Kelola lokasi dan status pasar secara keseluruhan.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -63,9 +63,9 @@ export const MarketSettings: FC<MarketSettingsProps> = ({ settings, onSave }) =>
               name="marketLocation"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Market's Location</FormLabel>
+                  <FormLabel>Lokasi Pasar</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., Downtown Store" {...field} />
+                    <Input placeholder="cth., Pasar Induk" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,9 +80,9 @@ export const MarketSettings: FC<MarketSettingsProps> = ({ settings, onSave }) =>
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
-                    <FormLabel className="text-base">Market Status</FormLabel>
+                    <FormLabel className="text-base">Status Pasar</FormLabel>
                     <FormDescription>
-                      Is the market currently open or closed?
+                      Apakah pasar saat ini buka atau tutup?
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -101,10 +101,10 @@ export const MarketSettings: FC<MarketSettingsProps> = ({ settings, onSave }) =>
                 name="closureReason"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Reason for Closure</FormLabel>
+                    <FormLabel>Alasan Penutupan</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="e.g., Holiday, maintenance, etc."
+                        placeholder="cth., Hari libur, pemeliharaan, dll."
                         {...field}
                       />
                     </FormControl>

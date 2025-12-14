@@ -1,20 +1,20 @@
 import { z } from 'zod';
 
 export const stockItemSchema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+  name: z.string().min(2, { message: 'Nama harus minimal 2 karakter.' }),
   amount: z.coerce
-    .number({ invalid_type_error: 'Amount must be a number.' })
+    .number({ invalid_type_error: 'Jumlah harus berupa angka.' })
     .int()
-    .positive({ message: 'Amount must be a positive number.' }),
+    .positive({ message: 'Jumlah harus berupa angka positif.' }),
   description: z
     .string()
-    .min(10, { message: 'Description must be at least 10 characters.' })
-    .max(200, { message: 'Description cannot exceed 200 characters.' }),
-  imageUrl: z.string().url({ message: 'Please enter a valid image URL.' }),
+    .min(10, { message: 'Deskripsi harus minimal 10 karakter.' })
+    .max(200, { message: 'Deskripsi tidak boleh melebihi 200 karakter.' }),
+  imageUrl: z.string().url({ message: 'Silakan masukkan URL gambar yang valid.' }),
 });
 
 export const marketSettingsSchema = z.object({
-  marketLocation: z.string().min(3, { message: 'Market location is required.'}),
+  marketLocation: z.string().min(3, { message: 'Lokasi pasar wajib diisi.'}),
   marketStatus: z.boolean().default(true),
   closureReason: z.string().optional(),
 }).refine(data => {
@@ -23,6 +23,6 @@ export const marketSettingsSchema = z.object({
   }
   return true;
 }, {
-  message: "A reason of at least 10 characters is required when the market is closed.",
+  message: "Alasan minimal 10 karakter diperlukan saat pasar ditutup.",
   path: ["closureReason"],
 });

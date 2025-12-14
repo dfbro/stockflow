@@ -62,9 +62,9 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{editingStock ? 'Edit Stock' : 'Add New Stock'}</CardTitle>
+        <CardTitle>{editingStock ? 'Ubah Stok' : 'Tambah Stok Baru'}</CardTitle>
         <CardDescription>
-          {editingStock ? 'Update the details of the stock item.' : 'Fill in the form to add a new item to your inventory.'}
+          {editingStock ? 'Perbarui detail item stok.' : 'Isi formulir untuk menambahkan item baru ke inventaris Anda.'}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -75,9 +75,9 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Stock Name</FormLabel>
+                  <FormLabel>Nama Stok</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., Premium Widgets" {...field} />
+                    <Input placeholder="cth., Bawang Merah" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -88,9 +88,9 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Amount</FormLabel>
+                  <FormLabel>Jumlah</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="e.g., 100" {...field} />
+                    <Input type="number" placeholder="cth., 100" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -101,10 +101,10 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Deskripsi</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="A brief description of the stock item."
+                      placeholder="Deskripsi singkat tentang item stok."
                       {...field}
                     />
                   </FormControl>
@@ -117,12 +117,12 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
               name="imageUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Image URL</FormLabel>
+                  <FormLabel>URL Gambar</FormLabel>
                   <FormControl>
                     <Input placeholder="https://picsum.photos/seed/1/600/400" {...field} />
                   </FormControl>
                   <FormDescription>
-                    Provide a link to an image of the item.
+                    Berikan tautan ke gambar item.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -132,12 +132,12 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
             <div className="flex flex-col sm:flex-row gap-2">
               <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
                 {editingStock ? <Save /> : <PlusCircle />}
-                {editingStock ? 'Save Changes' : 'Add to Inventory'}
+                {editingStock ? 'Simpan Perubahan' : 'Tambahkan ke Inventaris'}
               </Button>
               {editingStock && (
                 <Button variant="outline" className="w-full" onClick={onClearEditing}>
                   <XCircle />
-                  Cancel Edit
+                  Batalkan Pengeditan
                 </Button>
               )}
             </div>

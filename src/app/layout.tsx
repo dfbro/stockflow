@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'StockFlow',
-  description: 'Manage your stock supply and logistics with ease.',
+  description: 'Kelola pasokan dan logistik stok Anda dengan mudah.',
 };
 
 export default function RootLayout({
