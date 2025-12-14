@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     // In a real production environment, you would likely remove this
     // or replace it with your actual domain.
     allowedDevOrigins: ["mikir.lylo.eu.org"],
+    serverActions: {
+      allowedForwardedHosts: ['mikir.lylo.eu.org', '127.0.0.1'],
+    },
   },
   typescript: {
     ignoreBuildErrors: true,
