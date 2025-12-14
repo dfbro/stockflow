@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useTransition, useEffect, type FC } from 'react';
-import { Package, Send, LoaderCircle } from 'lucide-react';
+import Link from 'next/link';
+import { Package, Send, LoaderCircle, ClipboardList } from 'lucide-react';
 import { StockForm } from '@/components/stock-form';
 import { StockList } from '@/components/stock-list';
 import { Button } from '@/components/ui/button';
@@ -173,7 +174,13 @@ const Page: FC = () => {
               <Package className="h-8 w-8 text-primary" />
               <h1 className="text-2xl font-bold tracking-tight">StockFlow</h1>
             </div>
-            <div className="flex flex-col items-end">
+            <div className="flex items-center gap-2">
+              <Button variant="outline" asChild>
+                <Link href="/orders">
+                  <ClipboardList />
+                  Daftar Pesanan
+                </Link>
+              </Button>
               <Button
                 onClick={handleApiSubmit}
                 disabled={isPending || editingStock !== null || !hasUnsavedChanges}
