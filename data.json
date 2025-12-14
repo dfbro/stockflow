@@ -1,0 +1,16 @@
+{
+  "stocks": [
+    {
+      "id": "d36d0db8-ff64-4128-9a8d-1a2375b75626",
+      "name": "ngawoer",
+      "amount": 10,
+      "description": "wlee mus be zero",
+      "imageUrl": "https://mikir.lylo.eu.org/_next/image?url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FkN4x_9qoEEk%2Fhq720.jpg%3Fsqp%3D-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD%26rs%3DAOn4CLC9Uoya4IRa7lHpsA_yJlYD0Gvl9Q&w=640&q=75"
+    }
+  ],
+  "marketSettings": {
+    "marketLocation": "Jl brawijaya ngawur",
+    "marketStatus": true,
+    "closureReason": "gak tawu"
+  }
+}

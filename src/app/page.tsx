@@ -14,6 +14,11 @@ import { MarketSettings } from '@/components/market-settings';
 const Page: FC = () => {
   const [stocks, setStocks] = useState<StockItemType[]>([]);
   const [marketSettings, setMarketSettings] = useState<MarketSettingsType | null>(null);
+  
+  const [originalStocks, setOriginalStocks] = useState<StockItemType[]>([]);
+  const [originalMarketSettings, setOriginalMarketSettings] = useState<MarketSettingsType | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  
   const [editingStock, setEditingStock] = useState<StockItemType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isPending, startTransition] = useTransition();
@@ -29,8 +34,15 @@ const Page: FC = () => {
           throw new Error('Failed to fetch data');
         }
         const data = await response.json();
-        setStocks(Array.isArray(data.stocks) ? data.stocks : []);
-        setMarketSettings(data.marketSettings || null);
+        
+        const fetchedStocks = Array.isArray(data.stocks) ? data.stocks : [];
+        const fetchedSettings = data.marketSettings || null;
+
+        setStocks(fetchedStocks);
+        setMarketSettings(fetchedSettings);
+        setOriginalStocks(fetchedStocks);
+        setOriginalMarketSettings(fetchedSettings);
+
       } catch (error) {
         toast({
           variant: 'destructive',
@@ -43,6 +55,12 @@ const Page: FC = () => {
     };
     fetchData();
   }, [toast]);
+  
+  useEffect(() => {
+    const stocksChanged = JSON.stringify(stocks) !== JSON.stringify(originalStocks);
+    const settingsChanged = JSON.stringify(marketSettings) !== JSON.stringify(originalMarketSettings);
+    setHasUnsavedChanges(stocksChanged || settingsChanged);
+  }, [stocks, marketSettings, originalStocks, originalMarketSettings]);
 
 
   const handleAddStock = (newStockData: StockItemData) => {
@@ -76,10 +94,6 @@ const Page: FC = () => {
   
   const handleUpdateMarketSettings = (settings: MarketSettingsType) => {
     setMarketSettings(settings);
-    toast({
-        title: 'Settings Updated',
-        description: 'Market settings have been updated locally.',
-    });
   }
 
   const handleApiSubmit = () => {
@@ -94,6 +108,8 @@ const Page: FC = () => {
     startTransition(async () => {
       const result = await submitStockData({stocks, marketSettings});
       if (result.success) {
+        setOriginalStocks(stocks);
+        setOriginalMarketSettings(marketSettings);
         toast({
           title: 'Success!',
           description: result.message,
@@ -157,19 +173,24 @@ const Page: FC = () => {
               <Package className="h-8 w-8 text-primary" />
               <h1 className="text-2xl font-bold tracking-tight">StockFlow</h1>
             </div>
-            <Button
-              onClick={handleApiSubmit}
-              disabled={isPending || editingStock !== null || !marketSettings}
-            >
-              {isPending ? (
-                <LoaderCircle className="animate-spin" />
-              ) : (
-                <Send />
+            <div className="flex flex-col items-end">
+              <Button
+                onClick={handleApiSubmit}
+                disabled={isPending || editingStock !== null || !hasUnsavedChanges}
+              >
+                {isPending ? (
+                  <LoaderCircle className="animate-spin" />
+                ) : (
+                  <Send />
+                )}
+                <span>
+                  {isPending ? 'Saving...' : 'Update Market'}
+                </span>
+              </Button>
+              {hasUnsavedChanges && !isPending && (
+                  <p className="text-xs text-muted-foreground mt-1">Unsaved changes</p>
               )}
-              <span>
-                {isPending ? 'Saving...' : 'Update Market'}
-              </span>
-            </Button>
+            </div>
           </div>
         </div>
       </header>
