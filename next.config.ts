@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   experimental: {
     serverActions: {
       // see section 2
-      allowedOrigins: ['mikir.lylo.eu.org'],
+      allowedOrigins: ['mikir.lylo.eu.org'], //ganti ke domain kita [biasanya untuk reverse proxy ygy]
     },
   },
 };
