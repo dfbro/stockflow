@@ -6,12 +6,14 @@ import { StockForm } from '@/components/stock-form';
 import { StockList } from '@/components/stock-list';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import type { StockItem as StockItemType, StockItemData } from '@/lib/types';
+import type { StockItem as StockItemType, StockItemData, MarketSettings as MarketSettingsType } from '@/lib/types';
 import { submitStockData } from './actions';
 import { Skeleton } from '@/components/ui/skeleton';
+import { MarketSettings } from '@/components/market-settings';
 
 const Page: FC = () => {
   const [stocks, setStocks] = useState<StockItemType[]>([]);
+  const [marketSettings, setMarketSettings] = useState<MarketSettingsType | null>(null);
   const [editingStock, setEditingStock] = useState<StockItemType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isPending, startTransition] = useTransition();
@@ -20,25 +22,26 @@ const Page: FC = () => {
 
   useEffect(() => {
     setIsClient(true);
-    const fetchStocks = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch('/api/stocks');
         if (!response.ok) {
-          throw new Error('Failed to fetch stocks');
+          throw new Error('Failed to fetch data');
         }
         const data = await response.json();
-        setStocks(Array.isArray(data) ? data : []);
+        setStocks(Array.isArray(data.stocks) ? data.stocks : []);
+        setMarketSettings(data.marketSettings || null);
       } catch (error) {
         toast({
           variant: 'destructive',
           title: 'Error',
-          description: 'Could not load stock data.',
+          description: 'Could not load initial data.',
         });
       } finally {
         setIsLoading(false);
       }
     };
-    fetchStocks();
+    fetchData();
   }, [toast]);
 
 
@@ -70,10 +73,26 @@ const Page: FC = () => {
   const handleRemoveStock = (id: string) => {
     setStocks((prevStocks) => prevStocks.filter((stock) => stock.id !== id));
   };
+  
+  const handleUpdateMarketSettings = (settings: MarketSettingsType) => {
+    setMarketSettings(settings);
+    toast({
+        title: 'Settings Updated',
+        description: 'Market settings have been updated locally.',
+    });
+  }
 
   const handleApiSubmit = () => {
+    if (!marketSettings) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Market settings are not available.',
+      });
+      return;
+    }
     startTransition(async () => {
-      const result = await submitStockData(stocks);
+      const result = await submitStockData({stocks, marketSettings});
       if (result.success) {
         toast({
           title: 'Success!',
@@ -105,8 +124,9 @@ const Page: FC = () => {
       </header>
       <main className="flex-1 container mx-auto p-4 sm:p-6 lg:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          <div className="lg:col-span-1 lg:sticky lg:top-24">
-             <Skeleton className="h-[550px] rounded-lg" />
+          <div className="lg:col-span-1 lg:sticky lg:top-24 space-y-8">
+             <Skeleton className="h-[400px] rounded-lg" />
+             <Skeleton className="h-[300px] rounded-lg" />
           </div>
           <div className="lg:col-span-2">
             <div className="space-y-4">
@@ -139,7 +159,7 @@ const Page: FC = () => {
             </div>
             <Button
               onClick={handleApiSubmit}
-              disabled={stocks.length === 0 || isPending || editingStock !== null}
+              disabled={isPending || editingStock !== null || !marketSettings}
             >
               {isPending ? (
                 <LoaderCircle className="animate-spin" />
@@ -155,12 +175,20 @@ const Page: FC = () => {
       </header>
       <main className="flex-1 container mx-auto p-4 sm:p-6 lg:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          <div className="lg:col-span-1 lg:sticky lg:top-24">
+          <div className="lg:col-span-1 lg:sticky lg:top-24 space-y-8">
              <StockForm 
                 onSave={editingStock ? handleUpdateStock : handleAddStock} 
                 editingStock={editingStock}
                 onClearEditing={() => setEditingStock(null)}
               />
+            {isLoading || !marketSettings ? (
+                <Skeleton className="h-[300px] rounded-lg" />
+            ) : (
+                <MarketSettings
+                    settings={marketSettings}
+                    onSave={handleUpdateMarketSettings}
+                />
+            )}
           </div>
           <div className="lg:col-span-2">
             {isLoading ? (

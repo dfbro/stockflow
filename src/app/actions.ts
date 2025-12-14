@@ -1,9 +1,9 @@
 'use server';
 
-import type { StockItem } from '@/lib/types';
+import type { StockDataPayload } from '@/lib/types';
 import { revalidatePath } from 'next/cache';
 
-async function apiCall(data: StockItem[]): Promise<{ success: boolean; message: string }> {
+async function apiCall(data: StockDataPayload): Promise<{ success: boolean; message: string }> {
   try {
     // In a real app, you would get this URL from an environment variable
     const apiUrl = process.env.NODE_ENV === 'production'
@@ -21,7 +21,7 @@ async function apiCall(data: StockItem[]): Promise<{ success: boolean; message: 
 
     if (response.ok) {
       const result = await response.json();
-      return { success: true, message: result.message || 'Stock data submitted successfully!' };
+      return { success: true, message: result.message || 'Market data submitted successfully!' };
     } else {
       const errorResult = await response.json();
       return { success: false, message: errorResult.message || 'API submission failed. Please try again.' };
@@ -35,9 +35,9 @@ async function apiCall(data: StockItem[]): Promise<{ success: boolean; message: 
   }
 }
 
-export async function submitStockData(stocks: StockItem[]) {
+export async function submitStockData(payload: StockDataPayload) {
   try {
-    const result = await apiCall(stocks);
+    const result = await apiCall(payload);
     if (result.success) {
       revalidatePath('/');
       revalidatePath('/api/stocks');

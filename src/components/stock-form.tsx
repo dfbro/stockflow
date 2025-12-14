@@ -17,10 +17,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { stockSchema } from '@/lib/schema';
+import { stockItemSchema } from '@/lib/schema';
 import type { StockItem, StockItemData } from '@/lib/types';
-import { Switch } from '@/components/ui/switch';
-import { Separator } from '@/components/ui/separator';
 
 interface StockFormProps {
   onSave: (data: StockItem) => void;
@@ -30,19 +28,14 @@ interface StockFormProps {
 
 export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEditing }) => {
   const form = useForm<StockItemData>({
-    resolver: zodResolver(stockSchema),
+    resolver: zodResolver(stockItemSchema),
     defaultValues: {
       name: '',
       amount: 0,
       description: '',
       imageUrl: '',
-      marketLocation: '',
-      marketStatus: true,
-      closureReason: '',
     },
   });
-
-  const marketStatus = form.watch("marketStatus");
 
   useEffect(() => {
     if (editingStock) {
@@ -53,9 +46,6 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
         amount: 0,
         description: '',
         imageUrl: '',
-        marketLocation: '',
-        marketStatus: true,
-        closureReason: '',
       });
     }
   }, [editingStock, form]);
@@ -138,62 +128,6 @@ export const StockForm: FC<StockFormProps> = ({ onSave, editingStock, onClearEdi
                 </FormItem>
               )}
             />
-
-            <Separator />
-            
-            <FormField
-              control={form.control}
-              name="marketLocation"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Market's Location</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g., Downtown Store" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
-              control={form.control}
-              name="marketStatus"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">Market Status</FormLabel>
-                    <FormDescription>
-                      Is the market currently open or closed?
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            {!marketStatus && (
-              <FormField
-                control={form.control}
-                name="closureReason"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Reason for Closure</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="e.g., Holiday, maintenance, etc."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
 
             <div className="flex flex-col sm:flex-row gap-2">
               <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
