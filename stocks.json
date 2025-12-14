@@ -1,12 +1,9 @@
-{
-  "appPackageName": "tkstudio.autoresponderforwa",
-  "messengerPackageName": "com.whatsapp",
-  "query": {
-    "sender": "͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏͏Daffa Moklet",
-    "message": "stok",
-    "isGroup": false,
-    "groupParticipant": "",
-    "ruleId": 1,
-    "isTestMessage": false
+[
+  {
+    "id": "0d243679-d45e-4026-9e5e-0176f50a1b22",
+    "name": "34r",
+    "amount": 3,
+    "description": "a foody feet",
+    "imageUrl": "https://picsum.photos/200/300"
   }
-}
+]

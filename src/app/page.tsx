@@ -184,7 +184,7 @@ const Page: FC = () => {
       </main>
       <footer className="bg-card border-t">
         <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} StockFlow. All rights reserved.
+          {isClient && <span>&copy; {new Date().getFullYear()} StockFlow. All rights reserved.</span>}
         </div>
       </footer>
     </div>
